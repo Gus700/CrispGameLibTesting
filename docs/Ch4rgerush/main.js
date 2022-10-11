@@ -16,7 +16,7 @@ const G = {
 	HEIGHT: 100,
 	STAR_SPEED_MIN: 0.5,
 	STAR_SPEED_MAX: 1.0,
-	MAX_JUMP_HEIGHT: 30
+	MAX_JUMP_HEIGHT: 35
 };
 
 options = { 
@@ -63,14 +63,14 @@ let player;
 
 let jumping = false;
 let ObstSpawnX = G.WIDTH;
-let ObstSpawnY = G.HEIGHT * 0.4;
+let ObstSpawnY = G.HEIGHT * 0.8;
 function update() {
 	// The init function running at startup
 	if (!ticks) {
 		//initialize the stars
 		stars = times(20, () => {
 			const posX = rnd(0, G.WIDTH);
-			const posY = rnd(0, G.HEIGHT);
+			const posY = rnd(0, G.HEIGHT * 0.7);
 			return {
 				pos: vec(posX, posY),
 				speed: rnd(G.STAR_SPEED_MIN, G.STAR_SPEED_MAX)
@@ -82,8 +82,8 @@ function update() {
 			return {
 				pos: vec(posX, ObstSpawnY),
 				speed: 1,
-				sizeX: 10, 
-				sizeY: rnd(1, 15)
+				sizeX: 5, 
+				sizeY: rnd(1, 20)
 			};
 
 		});

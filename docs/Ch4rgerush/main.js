@@ -1,11 +1,13 @@
-title = "Moon jump";
+title = "Space Jump";
 
 description = `
 `;
 
 characters = [
 `
-  cc  
+ cccc 
+cccccc
+ cccc
 cccccc
   cc
 cc  cc
@@ -85,7 +87,7 @@ function update() {
 				pos: vec(posX, ObstSpawnY),
 				speed: ObstSpeed,
 				sizeX: 5, 
-				sizeY: rnd(1, 20)
+				sizeY: rnd(10, 30)
 			};
 
 		});

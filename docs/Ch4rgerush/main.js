@@ -134,9 +134,13 @@ function update() {
 	// makes sure the player is brought down
 	if (!(char("a", player.pos).isColliding.rect.blue) && jumping == false) {
 		if (char("a", player.pos).isColliding.rect.blue) {
-			console.log("this is a coolision")
+		console.log("this is a coolision")
 		}
-		player.pos.y += 3;
+		player.pos.y += 1;
 	}
+	if (char("a", player.pos).isColliding.rect.red) {
+		console.log("Collided with an obstacle")
+		}
+
 	player.pos.clamp(0, G.WIDTH, 0, G.HEIGHT);
 }

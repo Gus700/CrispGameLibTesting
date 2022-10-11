@@ -62,6 +62,7 @@ let obst
 let player;
 
 let jumping = false;
+let falling = false;
 let ObstSpawnX = G.WIDTH;
 let ObstSpawnY = G.HEIGHT * 0.8;
 function update() {
@@ -121,7 +122,7 @@ function update() {
 	}
 	// hold to jump higher
 	if (input.isPressed) {
-		if (player.pos.y > (G.HEIGHT * 0.7 - G.MAX_JUMP_HEIGHT) && jumping == true) {
+		if (player.pos.y > (G.HEIGHT * 0.7 - G.MAX_JUMP_HEIGHT) && jumping == true && falling != true) {
 			player.pos.y -= 3;
 		} else { // if reached max jumping height then signal jump is over
 		jumping = false;
@@ -133,14 +134,17 @@ function update() {
 	}
 	// makes sure the player is brought down
 	if (!(char("a", player.pos).isColliding.rect.blue) && jumping == false) {
-		if (char("a", player.pos).isColliding.rect.blue) {
-		console.log("this is a coolision")
-		}
-		player.pos.y += 1;
+		falling = true;
+		player.pos.y += 2;
 	}
+	if (char("a", player.pos).isColliding.rect.blue) {
+		//console.log("this is a colision with floor")
+		falling = false;
+	}
+	// collisions with obstacle
 	if (char("a", player.pos).isColliding.rect.red) {
 		console.log("Collided with an obstacle")
-		}
+	}
 
 	player.pos.clamp(0, G.WIDTH, 0, G.HEIGHT);
 }

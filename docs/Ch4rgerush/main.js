@@ -65,6 +65,7 @@ let jumping = false;
 let falling = false;
 let ObstSpawnX = G.WIDTH;
 let ObstSpawnY = G.HEIGHT * 0.8;
+let ObstSpeed = 1;
 function update() {
 	// The init function running at startup
 	if (!ticks) {
@@ -82,7 +83,7 @@ function update() {
 			const posX = ObstSpawnX += 100;
 			return {
 				pos: vec(posX, ObstSpawnY),
-				speed: 1,
+				speed: ObstSpeed,
 				sizeX: 5, 
 				sizeY: rnd(1, 20)
 			};
@@ -107,7 +108,7 @@ function update() {
 	obst.forEach((o) => {
 		o.pos.x -= o.speed;
 		o.pos.wrap(0, G.WIDTH, 0, G.HEIGHT);
-		color("red");
+		color("blue");
 		box(o.pos, o.sizeX, o.sizeY);
 	});
 	// draw floor
@@ -141,10 +142,15 @@ function update() {
 		//console.log("this is a colision with floor")
 		falling = false;
 	}
-	// collisions with obstacle
-	if (char("a", player.pos).isColliding.rect.red) {
+	// collisions with obstacle or floor will move the character back
+	if (char("a", player.pos).isColliding.rect.blue) {
 		console.log("Collided with an obstacle")
+		player.pos.x -= ObstSpeed;
+	} else if (!(char("a", player.pos).isColliding.rect.blue) && player.pos.x < G.WIDTH * 0.6) {
+		player.pos.x += ObstSpeed / 3;
 	}
+	// keep the character moving foward if they are not on the ground or touching an obstacle
+
 
 	player.pos.clamp(0, G.WIDTH, 0, G.HEIGHT);
 }

@@ -77,13 +77,13 @@ function update() {
 			};
 		});
 		// initialize the obstacles
-		obst = times(10 , () => {
-			const posX = ObstSpawnX += 5;
+		obst = times(3 , () => {
+			const posX = ObstSpawnX += 100;
 			return {
 				pos: vec(posX, ObstSpawnY),
-				speed: rnd (3, 4),
-				sizeX: rnd(1, 10), 
-				sizeY: rnd(1, 10)
+				speed: 1,
+				sizeX: 10, 
+				sizeY: rnd(1, 15)
 			};
 
 		});
@@ -105,7 +105,7 @@ function update() {
 	// update the obstacles that were created in the intialization
 	obst.forEach((o) => {
 		o.pos.x -= o.speed;
-		//o.pos.wrap(0, 0, 0, 0);
+		o.pos.wrap(0, G.WIDTH, 0, G.HEIGHT);
 		color("red");
 		box(o.pos, o.sizeX, o.sizeY);
 	});

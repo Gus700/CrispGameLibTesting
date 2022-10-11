@@ -39,6 +39,7 @@ let stars;
 /**
  * @typedef {{
  * pos: Vector,
+ * speed: number,
  * sizeX: number,
  * sizeY: number
  * }} Obst
@@ -61,8 +62,8 @@ let obst
 let player;
 
 let jumping = false;
-let ObstSpawnY = G.HEIGHT * 0.7;
 let ObstSpawnX = G.WIDTH;
+let ObstSpawnY = G.HEIGHT * 0.4;
 function update() {
 	// The init function running at startup
 	if (!ticks) {
@@ -80,6 +81,7 @@ function update() {
 			const posX = ObstSpawnX += 5;
 			return {
 				pos: vec(posX, ObstSpawnY),
+				speed: rnd (3, 4),
 				sizeX: rnd(1, 10), 
 				sizeY: rnd(1, 10)
 			};
@@ -99,6 +101,13 @@ function update() {
 		s.pos.wrap(0, G.WIDTH, 0, G.HEIGHT);
 		color("yellow");
 		box(s.pos, 1);
+	});
+	// update the obstacles that were created in the intialization
+	obst.forEach((o) => {
+		o.pos.x -= o.speed;
+		//o.pos.wrap(0, 0, 0, 0);
+		color("red");
+		box(o.pos, o.sizeX, o.sizeY);
 	});
 	// draw floor
 	color("blue");

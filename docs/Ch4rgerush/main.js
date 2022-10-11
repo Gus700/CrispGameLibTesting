@@ -39,6 +39,19 @@ let stars;
 /**
  * @typedef {{
  * pos: Vector,
+ * sizeX: number,
+ * sizeY: number
+ * }} Obst
+ */
+
+/**
+ * @type { Obst [] }
+ */
+let obst
+
+/**
+ * @typedef {{
+ * pos: Vector,
  * }} Player
  */
 
@@ -47,8 +60,9 @@ let stars;
 */
 let player;
 
-let jump_charge = 0;
 let jumping = false;
+let ObstSpawnY = G.HEIGHT * 0.7;
+let ObstSpawnX = G.WIDTH;
 function update() {
 	// The init function running at startup
 	if (!ticks) {
@@ -61,10 +75,21 @@ function update() {
 				speed: rnd(G.STAR_SPEED_MIN, G.STAR_SPEED_MAX)
 			};
 		});
+		// initialize the obstacles
+		obst = times(10 , () => {
+			const posX = ObstSpawnX += 5;
+			return {
+				pos: vec(posX, ObstSpawnY),
+				sizeX: rnd(1, 10), 
+				sizeY: rnd(1, 10)
+			};
+
+		});
 		//initialize the player
 		player = {
 			pos: vec(G.WIDTH * 0.4, G.HEIGHT * 0.7)
 		};
+
 
 	}
 

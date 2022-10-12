@@ -153,12 +153,11 @@ function update() {
 		jumping = false;
 	}
 	// makes sure the player is brought down
-	if (!(char("a", player.pos).isColliding.rect.blue) && jumping == false) {
+	if (!(char("a", player.pos).isColliding.rect.blue) && jumping == false ||
+	((char("a", player.pos).isColliding.rect.blue) && player.pos.y < G.HEIGHT * 0.6)) {
 		falling = true;
 		player.pos.y += 2;
-	}
-	if (char("a", player.pos).isColliding.rect.blue) {
-		//console.log("this is a colision with floor")
+	} else {
 		falling = false;
 	}
 	// collisions with obstacle or floor will move the character back

@@ -50,7 +50,12 @@ let stars;
 /**
  * @type { Obst [] }
  */
-let obst
+let obst = [];
+
+/**
+ * @type { Obst [] }
+ */
+ let topObst = [];
 
 /**
  * @typedef {{
@@ -66,7 +71,7 @@ let player;
 let jumping = false;
 let falling = false;
 let ObstSpawnX = G.WIDTH;
-let ObstSpawnY = G.HEIGHT * 0.8;
+let ObstSpawnY = G.HEIGHT * 0.9;
 let ObstSpeed = 1;
 function update() {
 	// The init function running at startup
@@ -83,11 +88,19 @@ function update() {
 		// initialize the obstacles
 		obst = times(3 , () => {
 			const posX = ObstSpawnX += 100;
-			return {
-				pos: vec(posX, ObstSpawnY),
+			const posY = rnd(ObstSpawnY, ObstSpawnY - 15)
+			// initialize the complimentary top Obstacles
+			topObst.push({
+				pos: vec(posX, posY - 70),
 				speed: ObstSpeed,
 				sizeX: 5, 
-				sizeY: rnd(10, 30)
+				sizeY: 60
+			});
+			return {
+				pos: vec(posX, posY),
+				speed: ObstSpeed,
+				sizeX: 5, 
+				sizeY: 20
 			};
 
 		});
@@ -95,10 +108,7 @@ function update() {
 		player = {
 			pos: vec(G.WIDTH * 0.4, G.HEIGHT * 0.7)
 		};
-
-
 	}
-
 	// update for the stars that were created above
 	stars.forEach((s) => {
 		s.pos.x -= s.speed;
@@ -106,8 +116,15 @@ function update() {
 		color("yellow");
 		box(s.pos, 1);
 	});
-	// update the obstacles that were created in the intialization
+	// draw obstacles
 	obst.forEach((o) => {
+		o.pos.x -= o.speed;
+		o.pos.wrap(0, G.WIDTH, 0, G.HEIGHT);
+		color("blue");
+		box(o.pos, o.sizeX, o.sizeY);
+	});
+	//draw top Obstacles
+	topObst.forEach((o) => {
 		o.pos.x -= o.speed;
 		o.pos.wrap(0, G.WIDTH, 0, G.HEIGHT);
 		color("blue");
@@ -146,10 +163,10 @@ function update() {
 	}
 	// collisions with obstacle or floor will move the character back
 	if (char("a", player.pos).isColliding.rect.blue) {
-		console.log("Collided with an obstacle")
+		//console.log("Collided with an obstacle")
 		player.pos.x -= ObstSpeed;
 	} else if (!(char("a", player.pos).isColliding.rect.blue) && player.pos.x < G.WIDTH * 0.6) {
-		player.pos.x += ObstSpeed / 3;
+		player.pos.x += ObstSpeed / 4.5;
 	}
 	// keep the character moving foward if they are not on the ground or touching an obstacle
 

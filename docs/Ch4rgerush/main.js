@@ -91,7 +91,7 @@ function update() {
 			const posY = rnd(ObstSpawnY, ObstSpawnY - 15)
 			// initialize the complimentary top Obstacles
 			topObst.push({
-				pos: vec(posX, posY - 70),
+				pos: vec(posX, posY - 60),
 				speed: ObstSpeed,
 				sizeX: 5, 
 				sizeY: 60
@@ -165,7 +165,7 @@ function update() {
 		//console.log("Collided with an obstacle")
 		player.pos.x -= ObstSpeed;
 	} else if (!(char("a", player.pos).isColliding.rect.blue) && player.pos.x < G.WIDTH * 0.6) {
-		player.pos.x += ObstSpeed / 4.5;
+		player.pos.x += ObstSpeed / 2;
 	}
 	// keep the character moving foward if they are not on the ground or touching an obstacle
 

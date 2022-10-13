@@ -23,7 +23,8 @@ const G = {
 
 options = { 
 	viewSize: {x:G.WIDTH, y:G.HEIGHT},
-	theme: "dark"
+	theme: "dark",
+	isReplayEnabled: true
 };
 
 /**
@@ -86,6 +87,7 @@ function update() {
 			};
 		});
 		// initialize the obstacles
+		topObst = [];
 		obst = times(3 , () => {
 			const posX = ObstSpawnX += 100;
 			const posY = rnd(ObstSpawnY, ObstSpawnY - 15)
@@ -164,11 +166,16 @@ function update() {
 	if (char("a", player.pos).isColliding.rect.blue) {
 		//console.log("Collided with an obstacle")
 		player.pos.x -= ObstSpeed;
-	} else if (!(char("a", player.pos).isColliding.rect.blue) && player.pos.x < G.WIDTH * 0.6) {
-		player.pos.x += ObstSpeed / 2;
-	}
 	// keep the character moving foward if they are not on the ground or touching an obstacle
-
+	} else if (!(char("a", player.pos).isColliding.rect.blue) && player.pos.x < G.WIDTH * 0.6) {
+		player.pos.x += ObstSpeed / 4;
+	}
+	// if the player has reached the end of the screen then make it end
+	if( player.pos.x <= 0) {
+		topObst = [];
+		end();
+	}
+	addScore(1);
 
 	player.pos.clamp(0, G.WIDTH, 0, G.HEIGHT);
 }

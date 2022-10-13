@@ -1,4 +1,4 @@
-title = "Space Jump";
+title = "SpaceJump";
 
 description = `
 `;
